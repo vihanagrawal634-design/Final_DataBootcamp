@@ -22,6 +22,7 @@ To handle skewed distributions, we applied log transformations to minimum nights
 The neural network had four hidden layers of decreasing size (256→128→64→32 neurons), followed by a 4-class output layer corresponding to the price categories. Each hidden layer incorporated batch normalization for training stability, ReLU activation functions for non-linearity, and 40% dropout for regularization to prevent overfitting.
 The model was trained using the AdamW optimizer with a learning rate of 0.001 and weight decay of 0.01 for L2 regularization. Another feature we included was early stopping with a patience of 30 epochs to prevent overfitting so whenever loss did not decrease after 30 epochs, it would stop.
 ![](image/img1.png)
+
 This was our output after our neural networks model attempted to predict the price ranges of the listings. Since we split the ranges into quartiles, there should have been an equal amount of predictions that fall within each range. It can be seen that the model overpredicted the amount in the cheap category, while having much less in the ultra expensive price range.
 
 *The Random Forest Classifier*
@@ -29,15 +30,18 @@ This was our output after our neural networks model attempted to predict the pri
 As a baseline comparison, we implemented a Random Forest classifier with 200 decision trees and a maximum depth of 20. The Random Forest was trained on the same preprocessed features using parallel processing for efficiency. This ensemble method provided both predictions and feature importance rankings, offering interpretability alongside performance.
 ![](image/img2.png)
 ![](image/img3.png)
+
 We used feature importance to see what the most important features were out of all of the ones we included in addition to the ones that we manufactured ourselves as well. This output shows us that property type, like whether it is an entire home or just a private room, made a large difference for this model when deciding what the price of the listing would be. One feature we thought would be more important is the borough, as we believed there would be a big difference in the price of listings in Manhattan versus Queens or the Bronx. However, this was probably accounted for as the neighborhood was extremely important, which makes sense because there is a lot of variance for the value of properties in different neighborhoods across Manhattan.
 Comparing Both Models
 The Random Forest model achieved slightly higher test accuracy compared to our Neural Networks model.
 ![](image/img4.png)
+
 This was our output when we compared the two models, and the random forest model performed slightly better, while neither model was exceptionally effective. Both were in the mid 60%s in terms of accuracy. What is notable, is that both models were much better at predicting on either end of the spectrum, so cheap and ultra expensive, compared to the values of listings that were more in the middle. 
 
 **Utilizing Our Model:**
 In order to put our model to the test, we used a function to randomly generate the features of “our” property in order to see what price range our model would recommend that we price this property in. 
 ![](image/img5.png)
+
 Using the key we provided in our code, borough 4 and neighborhood 85 correspond to Fresh Meadows in Staten Island. Looking at the number of bedrooms and bathrooms, we would personally believe that this listing, especially within New York City as a whole, would most likely fall below the 50th percentile in terms of price and most likely be in the medium category. However, strictly using this model, we now know what price our listing is likely to be able to be listed for and we have information moving forward before our property gets listed on Airbnb. 
 
 **Next Steps for our Model:**
